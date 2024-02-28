@@ -1,4 +1,4 @@
-import { BadRequestException } from "@nestjs/common";
+import { BadRequestException, UnsupportedMediaTypeException } from "@nestjs/common";
 import { MulterOptions } from "@nestjs/platform-express/multer/interfaces/multer-options.interface";
 import { existsSync, mkdirSync } from "fs";
 import { diskStorage } from "multer";
@@ -13,13 +13,13 @@ export const multerOptions: MulterOptions = {
         if (file.mimetype.match(/\/(jpg|jpeg|png|gif)$/)) {
             cb(null, true);
         } else {
-            cb(new BadRequestException('File not supported'), false);
+            cb(new UnsupportedMediaTypeException('File not supported'), false);
         }
     },
     storage: diskStorage({
-        destination(req, res, cb) {
+        destination(req, file, cb) {
             const uploadPath = './uploads';
-            if(!existsSync(uploadPath)) {
+            if (!existsSync(uploadPath)) {
                 mkdirSync(uploadPath);
             }
             cb(null, uploadPath);

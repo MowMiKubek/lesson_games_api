@@ -42,6 +42,7 @@ export class GamesController {
     @Param('id') id: string, 
     @UploadedFile() file: Express.Multer.File  
   ) {
+    if(file === undefined) throw new BadRequestException('File not provided');
     return this.gamesService.updateImage(+id, file.filename);
   }
 }
