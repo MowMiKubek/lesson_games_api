@@ -24,7 +24,7 @@
 
 ## Description
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+Monorepo containing backend made in [Nest](https://github.com/nestjs/nest) framework and [React](https://react.dev) front
 
 ## Installation
 
@@ -32,30 +32,24 @@
 $ npm install
 ```
 
-## Running the app
+## Running both apps
 
+```bash
+# this command will run both apps in dev mode
+$ npm run dev
+```
+
+
+## Running the app (backend)
 ```bash
 # development
 $ npm run start
 
 # watch mode
-$ npm run start:dev
+$ npm run dev
 
 # production mode
 $ npm run start:prod
-```
-
-## Test
-
-```bash
-# unit tests
-$ npm run test
-
-# e2e tests
-$ npm run test:e2e
-
-# test coverage
-$ npm run test:cov
 ```
 
 ## Support
