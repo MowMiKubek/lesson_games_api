@@ -4,8 +4,8 @@ import { UpdateGameDto } from './dto/update-game.dto';
 import { Game } from './entities/game.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { writeFileSync } from 'fs';
-
+import * as fs from 'fs';
+import { join } from 'path';
 @Injectable()
 export class GamesService {
   constructor(
@@ -33,12 +33,15 @@ export class GamesService {
     return this.gameRepository.save({id, ...updateGameDto});
   }
 
-  async updateImage(id: number, imgPath: string): Promise<Game> {
+  async updateImage(id: number, filename: string): Promise<Game> {
     const game = await this.findOne(id);
     if (!game) {
       throw new BadRequestException('Game not found');
     }
-    return this.gameRepository.save({id, image: imgPath});
+    if (game.image && fs.existsSync(join('uploads', game.image))) {
+      fs.unlinkSync(join('uploads', game.image));
+    }
+    return this.gameRepository.save({id, image: filename});
   }
 
   remove(id: number) {

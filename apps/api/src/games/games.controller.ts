@@ -42,6 +42,6 @@ export class GamesController {
     @Param('id') id: string, 
     @UploadedFile() file: Express.Multer.File  
   ) {
-    return { message: "File is uploaded successfully", path: `/assets/${file.filename}` };
+    return this.gamesService.updateImage(+id, file.filename);
   }
 }
