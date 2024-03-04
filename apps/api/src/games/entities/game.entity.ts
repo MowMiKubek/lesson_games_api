@@ -1,4 +1,5 @@
-import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
+import { Comment } from "../../comments/entities/comment.entity";
 
 @Entity()
 export class Game {
@@ -19,4 +20,7 @@ export class Game {
 
     @Column({ nullable: true })
     image: string;
+
+    @OneToMany(() => Comment, comment => comment.game, {eager: true})
+    comments: Comment[];
 }

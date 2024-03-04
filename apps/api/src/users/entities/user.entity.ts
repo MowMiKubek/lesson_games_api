@@ -1,5 +1,6 @@
 import { Exclude } from "class-transformer";
-import { Entity, Column, PrimaryGeneratedColumn } from "typeorm";
+import { Entity, Column, PrimaryGeneratedColumn, OneToMany } from "typeorm";
+import { Comment } from "../../comments/entities/comment.entity";
 
 @Entity()
 export class User {
@@ -27,4 +28,7 @@ export class User {
 
     @Column({ default: true })
     active: boolean;
+
+    @OneToMany(() => Comment, comment => comment.user)
+    comments: Comment[];
 }

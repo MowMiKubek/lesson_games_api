@@ -1,17 +1,26 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, Req, UseGuards, ParseIntPipe } from '@nestjs/common';
 import { CommentsService } from './comments.service';
 import { CreateCommentDto } from './dto/create-comment.dto';
 import { UpdateCommentDto } from './dto/update-comment.dto';
-import { ApiTags } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiCreatedResponse, ApiTags, ApiUnauthorizedResponse } from '@nestjs/swagger';
+import { Comment } from './entities/comment.entity';
+import { AuthGuard } from 'src/auth/guards/auth.guard';
 
 @ApiTags('comments')
+@ApiBearerAuth()
 @Controller('comments')
 export class CommentsController {
   constructor(private readonly commentsService: CommentsService) {}
 
-  @Post()
-  create(@Body() createCommentDto: CreateCommentDto) {
-    return this.commentsService.create(createCommentDto);
+  @UseGuards(AuthGuard)
+  @ApiCreatedResponse({ description: 'The record has been successfully created.', type: Comment})
+  @ApiUnauthorizedResponse({ description: 'User is not logged in.'})
+  @Post(':gameid')
+  create(
+    @Body() createCommentDto: CreateCommentDto, 
+    @Param('gameid', ParseIntPipe) gameid: number,
+    @Req() req: any) {
+    return this.commentsService.create(createCommentDto, gameid, req.user.sub);
   }
 
   @Get()
