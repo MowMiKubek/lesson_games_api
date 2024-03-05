@@ -8,8 +8,8 @@ function App() {
   useEffect(() => {
     fetch('/api/test/Kuba')
       .then((res) => res.json())
-      .then((data) => console.log(data))
       .then((data) => setGreetings(data.message))
+      // .then((data) => console.log(data))
   }, [])
 
 
@@ -22,9 +22,9 @@ function App() {
         <a href="https://react.dev" target="_blank">
           <img src={reactLogo} className="logo react" alt="React logo" />
         </a>
-        <img src="/api/assets/test.png" alt="test" />
+        {/* <img src="/api/assets/test.png" alt="test" /> */}
       </div>
-      <h1>Hello {greetings}</h1>
+      <h1>{greetings}</h1>
     </>
   )
 }
