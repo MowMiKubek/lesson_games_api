@@ -2,30 +2,36 @@ import { useEffect, useState } from 'react'
 import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 import './App.css'
+import GameCard from './components/GameCard';
+import CardWrapper from './components/CardWrapper';
 
 function App() {
-  const [greetings, setGreetings] = useState('')
+  const [games, setGames] = useState([]);
+
   useEffect(() => {
-    fetch('/api/test/Kuba')
-      .then((res) => res.json())
-      .then((data) => setGreetings(data.message))
-      // .then((data) => console.log(data))
-  }, [])
-
-
+    const fetchData = async () => {
+      const res = await fetch('/api/games');
+      const data = await res.json();
+      console.log(data)
+      setGames(data);
+    }
+    fetchData();
+  }, []);
   return (
-    <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-        {/* <img src="/api/assets/test.png" alt="test" /> */}
-      </div>
-      <h1>{greetings}</h1>
-    </>
+    <div>
+      <CardWrapper>
+        {
+          games.map(element => 
+            <GameCard 
+                key={element.id}
+                name={element.name}
+                image={element.image}
+                genre={element.genre}
+            />
+          )
+        }
+      </CardWrapper>
+    </div>
   )
 }
 
