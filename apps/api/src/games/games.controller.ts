@@ -2,7 +2,7 @@ import { Controller, Get, Post, Body, Patch, Param, Delete, Put, UseInterceptors
 import { GamesService } from './games.service';
 import { CreateGameDto } from './dto/create-game.dto';
 import { UpdateGameDto } from './dto/update-game.dto';
-import { ApiBearerAuth, ApiNoContentResponse, ApiOkResponse, ApiQuery, ApiTags, ApiUnauthorizedResponse } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiBody, ApiConsumes, ApiNoContentResponse, ApiOkResponse, ApiQuery, ApiTags, ApiUnauthorizedResponse } from '@nestjs/swagger';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { multerOptions } from 'config/multerOptions.config';
 import { Game } from './entities/game.entity';
@@ -54,6 +54,20 @@ export class GamesController {
   @ApiOkResponse({description: 'Image uploaded'})
   @Put('image/:id')
   @UseInterceptors(FileInterceptor('image', multerOptions))
+  @ApiConsumes('multipart/form-data')
+  @ApiBody({
+    description: 'The file to upload',
+    type: 'multipart/form-data',
+    schema: {
+      type: 'object',
+      properties: {
+        image: {
+          type: 'string',
+          format: 'binary',
+        },
+      },
+    },
+  })
   uploadImage(
     @Param('id') id: string, 
     @UploadedFile() file: Express.Multer.File  
