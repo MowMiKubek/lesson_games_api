@@ -3,6 +3,7 @@ import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 import './App.css'
 import GameCard from './components/GameCard';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import CardWrapper from './components/CardWrapper';
 
 function App() {
