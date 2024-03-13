@@ -8,6 +8,7 @@ export default function MainLayout() {
                 <ul>
                     <li><a href="/">Home</a></li>
                     <li><a href="/test">Test</a></li>
+                    <li><a href="/login">login</a></li>
                 </ul>
             </nav>
             <header>
