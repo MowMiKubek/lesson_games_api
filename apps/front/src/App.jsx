@@ -4,6 +4,7 @@ import MainLayout from './pages/layouts/MainLayout.jsx';
 import MainPage from './pages/main.jsx';
 import TestPage from './pages/test.jsx';
 import LoginPage from './pages/login.jsx';
+import ProfilePage from './pages/profile.jsx';
 
 function App() {
   return (
@@ -13,6 +14,7 @@ function App() {
           <Route path="/" element={<MainPage />} />
           <Route path="/login" element={<LoginPage />} />
           <Route path="/test" element={<TestPage />} />
+          <Route path="/profile" element={<ProfilePage />} />
         </Route>
       </Routes>
     </BrowserRouter>

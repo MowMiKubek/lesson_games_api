@@ -1,5 +1,5 @@
 import { useState } from "react"
-
+import { Navigate } from "react-router-dom";
 
 export default function LoginPage() {
     const [login, setLogin] = useState('');
@@ -7,14 +7,6 @@ export default function LoginPage() {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        // 1. Pobrać dane
-        // 2. Wysłać dane na serwer
-        // 3. Sprawdzić odpowiedź
-        // TODO
-        // 4a. Zapisać token w local storage
-        // 4b. Wyświetlić błąd
-        
-        // const data = { username: login, password: password };
         const data_parsed = JSON.stringify({ username: login, password });
         const response = await fetch('http://localhost:3001/api/auth/login', {
             method: 'POST',
@@ -23,15 +15,19 @@ export default function LoginPage() {
             },
             body: data_parsed
         });
-        console.log(response.status)
         const status = response.status;
+        const data = await response.json();
+        const token = data.access_token;
         if(200 <= status && status <= 299) {
-            alert('Zalogowano');
+            localStorage.setItem('access_token', token);
         } else if(400 <= status && status <= 499) {
             alert('Błąd logowania');
         }
-
         // const data = await response.json();
+    }
+
+    if(localStorage.getItem('access_token')) {
+        return <Navigate to="/"/>
     }
 
     return (

@@ -1,21 +1,17 @@
 import { Outlet } from "react-router";
 import styles from './styles.module.css';
+import NavigationBar from "../../components/NavigationBar";
 
 export default function MainLayout() {
     return (
         <>
-
+            <NavigationBar />
             <header className={styles.header}>
-            <nav className={styles.nav}>
-                <ul>
-                    <li><a href="/">Home</a></li>
-                    <li><a href="/test">Test</a></li>
-                    <li><a href="/login">login</a></li>
-                </ul>
-            </nav>
-                <h1>Games page</h1>
+            <h1>Games page</h1>
             </header>
-            <Outlet />
+            <main className={styles.content}>
+                <Outlet />
+            </main>
             <footer className={styles.footer}>stopka</footer>
         </>
     )
