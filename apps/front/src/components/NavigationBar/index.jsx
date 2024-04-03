@@ -1,22 +1,16 @@
 import styles from './styles.module.css';
-import { Link, redirect } from 'react-router-dom';
-import { useState, useEffect } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import { useAuth } from '../../lib/AuthContext';
 
 export default function NavigationBar() {
-    const [loggedIn, setLoggedIn] = useState(false);
-
-    useEffect(() => {
-        const token = localStorage.getItem('access_token');
-        if(token) {
-            setLoggedIn(true);
-        } else {
-            setLoggedIn(false);
-        }
-    }, [loggedIn]);
+    // const authManager = useAuth();
+    const {isAuthenticated, setIsAuthenticated} = useAuth();
+    const navigate = useNavigate();
 
     const handleLogout = () => {
         localStorage.removeItem('access_token');
-        redirect('/');
+        setIsAuthenticated(false);
+        navigate('/');
     }
 
     return (
@@ -27,7 +21,7 @@ export default function NavigationBar() {
             </ul>
             <ul>
                 {
-                    loggedIn
+                    isAuthenticated
                     ? <>
                         <li><Link to="/profile">Profile</Link></li>
                         <li><a onClick={handleLogout}>Logout</a></li>

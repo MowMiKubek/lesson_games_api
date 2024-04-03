@@ -1,9 +1,12 @@
 import { useState } from "react"
-import { Navigate } from "react-router-dom";
+import { Navigate, useNavigate } from "react-router-dom";
+import { useAuth } from "../lib/AuthContext";
 
 export default function LoginPage() {
     const [login, setLogin] = useState('');
     const [password, setPassword] = useState('');
+    const {isAuthenticated, setIsAuthenticated} = useAuth();
+    const navigate = useNavigate();
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -20,13 +23,15 @@ export default function LoginPage() {
         const token = data.access_token;
         if(200 <= status && status <= 299) {
             localStorage.setItem('access_token', token);
+            setIsAuthenticated(true);
+            navigate('/');
         } else if(400 <= status && status <= 499) {
             alert('Błąd logowania');
         }
         // const data = await response.json();
     }
 
-    if(localStorage.getItem('access_token')) {
+    if(isAuthenticated) {
         return <Navigate to="/"/>
     }
 
