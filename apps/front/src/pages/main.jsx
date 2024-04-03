@@ -23,6 +23,7 @@ export default function MainPage() {
                     name={element.name}
                     image={element.image}
                     genre={element.genre}
+                    id={element.id}
                 />
             )
             }
