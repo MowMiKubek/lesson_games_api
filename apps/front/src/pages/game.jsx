@@ -6,14 +6,24 @@ export default function GamePage() {
     const { id } = useParams();
     const [game, setGame] = useState({});
     const {isAuthenticated} = useAuth();
-    // useEffect(() => {
-    //     const fetchData = async () => {
-    //         // pobrać dane z api
-    //         // sprawdzić kod odpowiedzi
-    //         // zapisać do stanu
-    //     }
-    //     fetchData();
-    // }, []);
+    useEffect(() => {
+        const fetchData = async () => {
+            const response = await fetch('/api/games');
+
+            const status = response.status;
+            const data = await response.json();
+
+            if(200 <= status && status <= 299) {
+                console.log(data);
+                setGame(data);
+
+            } else if(400 <= status && status <= 499) {
+                alert('Błąd pobania danych');
+            }
+
+        }
+        fetchData();
+    }, []);
     return (
         <div>
             <h2>Game Page {id}</h2>
