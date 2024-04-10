@@ -8,6 +8,7 @@ import ProfilePage from './pages/profile.jsx';
 import GamePage from './pages/game.jsx';
 
 import { AuthProvider } from './lib/AuthContext.jsx';
+import RegisterPage from './pages/register.jsx';
 
 function App() {
   return (
@@ -20,6 +21,7 @@ function App() {
             <Route path="/test" element={<TestPage />} />
             <Route path="/profile" element={<ProfilePage />} />
             <Route path="/game/:id" element={<GamePage />} />
+            <Route path="/register" element={<RegisterPage />} />
           </Route>
         </Routes>
       </BrowserRouter>

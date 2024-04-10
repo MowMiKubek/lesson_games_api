@@ -42,7 +42,7 @@ export default function GamePage() {
                 }
                 <div>
                     {
-                    game.comments.map(comment => (
+                    game.comments && game.comments.map(comment => (
                         <div key={comment.id}>
                             <p>{comment.content}</p>
                             <p>{comment.rating}</p>
