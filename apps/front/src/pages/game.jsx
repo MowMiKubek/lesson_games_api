@@ -8,7 +8,7 @@ export default function GamePage() {
     const {isAuthenticated} = useAuth();
     useEffect(() => {
         const fetchData = async () => {
-            const response = await fetch('/api/games');
+            const response = await fetch(`/api/games/${id}`);
 
             const status = response.status;
             const data = await response.json();
@@ -26,8 +26,8 @@ export default function GamePage() {
     }, []);
     return (
         <div>
-            <h2>Game Page {id}</h2>
-            <p>Game content</p>
+            <h2>{game.name}</h2>
+            <p>{game.description}</p>
             <hr />
             <section>
                 <h3>Comments</h3>
@@ -41,9 +41,14 @@ export default function GamePage() {
                     : <p>Login to write comments</p>
                 }
                 <div>
-                    <p>Comment 1</p>
-                    <p>Comment 2</p>
-                    <p>Comment 3</p>
+                    {
+                    game.comments.map(comment => (
+                        <div key={comment.id}>
+                            <p>{comment.content}</p>
+                            <p>{comment.rating}</p>
+                        </div>
+                    ))
+                    }
                 </div>
             </section>
         </div>
