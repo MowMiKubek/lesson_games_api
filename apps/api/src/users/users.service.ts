@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable } from '@nestjs/common';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -10,7 +10,24 @@ import { hashSync } from 'bcryptjs';
 export class UsersService {
   constructor(@InjectRepository(User) private userRepository: Repository<User>) {}
 
-  create(createUserDto: CreateUserDto): Promise<User> {
+  async create(createUserDto: CreateUserDto): Promise<User> {
+    const [existingUsername, existingEmail] = await 
+    Promise.all([this.findOneByUsernameOrEmail(createUserDto.username), 
+                this.findOneByUsernameOrEmail(createUserDto.email)]);
+
+    let errorMessages = [];
+    if(existingUsername) 
+      errorMessages.push('Username already exists');
+    if(existingEmail)
+      errorMessages.push('Email already exists');
+
+    if(errorMessages.length > 0)
+      throw new BadRequestException({
+        message: errorMessages,
+        error: 'Bad Request',
+        statusCode: 400
+    });
+
     const hashedPassword = hashSync(createUserDto.password, 10);
     createUserDto.password = hashedPassword;
     return this.userRepository.save(createUserDto);
@@ -28,7 +45,29 @@ export class UsersService {
     return this.userRepository.findOne({where: [{username}, {email: username}]});
   }
 
-  update(id: number, updateUserDto: UpdateUserDto): Promise<User> {
+  async update(id: number, updateUserDto: UpdateUserDto): Promise<User> {
+    const user = await this.findOne(+id);
+    if(!user)
+      throw new BadRequestException('User not found');
+
+    const [existingUsername, existingEmail] = await 
+    Promise.all([this.findOneByUsernameOrEmail(updateUserDto.username), 
+                this.findOneByUsernameOrEmail(updateUserDto.email)]);
+
+    console.log(existingUsername, existingEmail)
+    let errorMessages = [];
+    if(updateUserDto.username !== undefined && existingUsername && existingUsername.id !== id) 
+      errorMessages.push('Username already exists');
+    if(updateUserDto.email !== undefined && existingEmail && existingEmail.id !== id)
+      errorMessages.push('Email already exists');
+
+    if(errorMessages.length > 0)
+      throw new BadRequestException({
+        message: errorMessages,
+        error: 'Bad Request',
+        statusCode: 400
+    });
+
     const { password, ...rest } = updateUserDto; 
     if (password) { 
       const hashedPassword = hashSync(password, 10); 
