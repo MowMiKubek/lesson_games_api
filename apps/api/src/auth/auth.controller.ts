@@ -1,9 +1,10 @@
-import { Body, Controller, Post, Request, UseGuards } from "@nestjs/common";
-import { ApiBearerAuth, ApiCreatedResponse, ApiTags, ApiUnauthorizedResponse } from "@nestjs/swagger";
+import { Body, Controller, Get, Patch, Post, Request, UseGuards } from "@nestjs/common";
+import { ApiBadRequestResponse, ApiBearerAuth, ApiCreatedResponse, ApiOkResponse, ApiTags, ApiUnauthorizedResponse } from "@nestjs/swagger";
 import LoginDto from "./dto/login.dto";
 import { AuthService } from "./auth.service";
 import { AuthGuard } from "./guards/auth.guard";
 import { User } from "src/users/entities/user.entity";
+import { UpdateUserDto } from "src/users/dto/update-user.dto";
 
 @ApiTags('auth')
 @ApiBearerAuth()
@@ -19,11 +20,20 @@ export class AuthController {
     }
 
     @UseGuards(AuthGuard)
-    @ApiCreatedResponse({ description: 'User object as response' })
+    @ApiOkResponse({ description: 'User object as response' })
     @ApiUnauthorizedResponse({ description: 'Invalid token. Error object as response' })
-    @Post('profile')
+    @Get('profile')
     async profile(@Request() req: Request) {
         //@ts-ignore
         return this.authService.getProfile(req.user.sub);
+    }
+
+    @UseGuards(AuthGuard)
+    @ApiOkResponse({ description: 'User object as response' })
+    @ApiBadRequestResponse({ description: 'Invalid data. Error object as response' })
+    @Patch('profile')
+    async update(@Body() updateUserDto: UpdateUserDto, @Request() req: Request){
+        //@ts-ignore
+        return this.authService.update(req.user.sub, updateUserDto);
     }
 }
