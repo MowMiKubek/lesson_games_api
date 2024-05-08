@@ -9,6 +9,8 @@ import GamePage from './pages/game.jsx';
 
 import { AuthProvider } from './lib/AuthContext.jsx';
 import RegisterPage from './pages/register.jsx';
+import UpdateProfilePage from './pages/update_profile.jsx';
+import ChangePasswordPage from './pages/change_password.jsx';
 
 function App() {
   return (
@@ -22,6 +24,8 @@ function App() {
             <Route path="/profile" element={<ProfilePage />} />
             <Route path="/game/:id" element={<GamePage />} />
             <Route path="/register" element={<RegisterPage />} />
+            <Route path="/profile/update" element={<UpdateProfilePage />}/>
+            <Route path="/profile/change_password" element={<ChangePasswordPage />}/>
           </Route>
         </Routes>
       </BrowserRouter>

@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { Navigate } from "react-router";
+import { Link } from "react-router-dom";
 
 export default function ProfilePage() {
     const [loading, setLoading] = useState(true);
@@ -39,6 +40,12 @@ export default function ProfilePage() {
             <h2>Profile Page</h2>
             <p>Witaj: {user.firstname} {user.lastname}</p>
             <p>email: {user.email}</p>
+            <div className="d-flex flex-row justify-content-center gap-2">
+                <Link to="/" className="btn btn-outline-primary">Strona główna</Link>
+                <Link to="/profile/update" className="btn btn-outline-secondary">Zmień dane</Link>
+                <Link to="/profile/change_password" className="btn btn-outline-warning">Zmień hasło</Link>
+                <Link to="/" className="btn btn-outline-danger disabled">Usuń konto</Link>
+            </div>
         </div>
     )
 }
