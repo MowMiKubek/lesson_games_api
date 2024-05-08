@@ -24,6 +24,6 @@ export class AuthController {
     @Post('profile')
     async profile(@Request() req: Request) {
         //@ts-ignore
-        return this.authService.getProfile(req.user.id);
+        return this.authService.getProfile(req.user.sub);
     }
 }

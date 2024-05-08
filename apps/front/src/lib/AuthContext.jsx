@@ -5,7 +5,8 @@ const AuthContext = createContext(null);
 export const useAuth = () => useContext(AuthContext);
 
 export const AuthProvider = ({ children }) => {
-    const [isAuthenticated, setIsAuthenticated] = useState(false);
+    const isLoggedIn = !!localStorage.getItem('access_token');
+    const [isAuthenticated, setIsAuthenticated] = useState(isLoggedIn);
 
     const toggleAuth = () => {
         setIsAuthenticated(!isAuthenticated);
@@ -17,9 +18,3 @@ export const AuthProvider = ({ children }) => {
         </AuthContext.Provider>
     )
 }
-
-{/* <AuthProvider>
-    <Router>
-        ...
-    </Router>
-</AuthProvider> */}

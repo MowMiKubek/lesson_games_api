@@ -26,7 +26,7 @@ export default function ProfilePage() {
             setLoading(false);
         }
         fetchProfile();
-    }, loading, user)
+    }, [loading, user])
 
     if(loading)
         return <p>Loading...</p>
