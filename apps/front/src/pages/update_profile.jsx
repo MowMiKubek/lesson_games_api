@@ -60,6 +60,7 @@ export default function UpdateProfilePage() {
                 <h2>Create new accout</h2>
                 <Formik
                     initialValues={user}
+                    enableReinitialize={true}
                     validationSchema={UpdateProfileSchema}
                     onSubmit={async (values) => {
                         const response = await fetch('http://localhost:3001/api/auth/profile', {
