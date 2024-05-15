@@ -33,7 +33,7 @@ export default function UpdateProfilePage() {
 
     useEffect(() => {
         const fetchProfile = async () => {
-            const response = await fetch('http://localhost:3001/api/auth/profile', {
+            const response = await fetch('/api/auth/profile', {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json',
@@ -63,7 +63,7 @@ export default function UpdateProfilePage() {
                     enableReinitialize={true}
                     validationSchema={UpdateProfileSchema}
                     onSubmit={async (values) => {
-                        const response = await fetch('http://localhost:3001/api/auth/profile', {
+                        const response = await fetch('/api/auth/profile', {
                             method: 'PATCH',
                             headers: {
                                 'Content-Type': 'application/json',
