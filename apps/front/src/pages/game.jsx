@@ -1,11 +1,10 @@
 import { useState, useEffect } from "react";
 import { useParams } from "react-router";
-import { useAuth } from "../lib/AuthContext";
+import CommentsContainer from "../components/CommentsContainer";
 
 export default function GamePage() {
     const { id } = useParams();
     const [game, setGame] = useState({});
-    const {isAuthenticated} = useAuth();
     useEffect(() => {
         const fetchData = async () => {
             const response = await fetch(`/api/games/${id}`);
@@ -30,26 +29,7 @@ export default function GamePage() {
             <p>{game.description}</p>
             <hr />
             <section>
-                <h3>Comments</h3>
-                {
-                    isAuthenticated
-                    ? 
-                    <form action="">
-                        <textarea cols="30" rows="10"></textarea>
-                        <button type="submit">Submit</button>
-                    </form>
-                    : <p>Login to write comments</p>
-                }
-                <div>
-                    {
-                    game.comments && game.comments.map(comment => (
-                        <div key={comment.id}>
-                            <p>{comment.content}</p>
-                            <p>{comment.rating}</p>
-                        </div>
-                    ))
-                    }
-                </div>
+                <CommentsContainer comments={game.comments}/>
             </section>
         </div>
     )
