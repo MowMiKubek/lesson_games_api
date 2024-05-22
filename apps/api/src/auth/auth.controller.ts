@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Patch, Post, Request, UseGuards } from "@nestjs/common";
+import { Body, Controller, Delete, Get, Patch, Post, Request, UseGuards } from "@nestjs/common";
 import { ApiBadRequestResponse, ApiBearerAuth, ApiCreatedResponse, ApiOkResponse, ApiTags, ApiUnauthorizedResponse } from "@nestjs/swagger";
 import LoginDto from "./dto/login.dto";
 import { AuthService } from "./auth.service";
@@ -35,5 +35,14 @@ export class AuthController {
     async update(@Body() updateUserDto: UpdateUserDto, @Request() req: Request){
         //@ts-ignore
         return this.authService.update(req.user.sub, updateUserDto);
+    }
+    
+    @UseGuards(AuthGuard)
+    @ApiOkResponse({ description: 'Account deleted successfully' })
+    @ApiUnauthorizedResponse({ description: 'Invalid token. Error object as response' })
+    @Delete('profile')
+    async delete(@Request() req: Request){
+        //@ts-ignore
+        return this.authService.delete(req.user.sub);
     }
 }

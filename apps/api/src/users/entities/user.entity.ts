@@ -29,6 +29,6 @@ export class User {
     @Column({ default: true })
     active: boolean;
 
-    @OneToMany(() => Comment, comment => comment.user)
+    @OneToMany(() => Comment, comment => comment.user, { onDelete: "SET NULL" })
     comments: Comment[];
 }

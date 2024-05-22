@@ -32,4 +32,8 @@ export class AuthService {
       async update(userId: number, updateUserDto: UpdateUserDto) {
         return this.usersService.update(userId, updateUserDto);
       }
+
+      async delete(userId: number) {
+        return this.usersService.remove(userId);
+      }
 }

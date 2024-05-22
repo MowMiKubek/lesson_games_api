@@ -77,6 +77,10 @@ export class UsersService {
   }
 
   remove(id: number) {
-    return this.userRepository.delete({id});
+    try {
+      return this.userRepository.delete(id);
+    } catch (error) {
+      console.log(error)
+    }
   }
 }

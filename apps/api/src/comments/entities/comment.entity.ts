@@ -21,7 +21,7 @@ export class Comment {
     @Column({ type: 'real' })
     rating: number;
 
-    @ManyToOne(() => User)
+    @ManyToOne(() => User, { onDelete: "SET NULL"})
     @JoinColumn({ name: 'user_id' })
     user: User;
     
@@ -30,7 +30,7 @@ export class Comment {
     game: Game;
 
     @ApiProperty({ description: 'The ID of the user who made the comment', type: Number })
-    @Column({ name: 'user_id'})
+    @Column({ name: 'user_id', nullable: true })
     userId: number;
 
     @ApiProperty({ description: 'The ID of the game the comment is related to', type: Number })
