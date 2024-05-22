@@ -2,14 +2,14 @@ import { FaRegStar } from "react-icons/fa6"; // empty
 import { FaRegStarHalfStroke } from "react-icons/fa6";
 import { FaStar } from "react-icons/fa6"; // full
 
-export function Comment({ content, rating, userId, createdAt }) {
+export function Comment({ content, rating, userId, createdAt, users }) {
     const fullStars = Math.floor(rating);
     const emptyStars = Math.floor(5 - rating);
     return (
         <div class="card text-start">
             <div className="card-body">
                 <h5 class="card-title d-flex justify-content-between">
-                    <p>User id: {userId}</p>
+                    <p>User id: {users[userId]}</p>
                     <p>            
                         {[...Array(fullStars)].map(() => <FaStar />)}         
                         {   

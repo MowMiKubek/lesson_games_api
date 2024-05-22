@@ -29,7 +29,7 @@ export default function GamePage() {
             <p>{game.description}</p>
             <hr />
             <section>
-                <CommentsContainer comments={game.comments}/>
+                <CommentsContainer comments={game.comments} gameId={id}/>
             </section>
         </div>
     )
