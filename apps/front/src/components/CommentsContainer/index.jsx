@@ -16,6 +16,7 @@ export default function CommentsContainer({ comments, gameId }) {
                     const data = await response.json();
                     return data;
                 }));
+                // await Promise.all([promise1, promise2, promise3])
                 const usersMap = users.reduce((map, user) => {
                     map[user.id] = user.firstname + ' ' + user.lastname;
                     return map;
@@ -39,9 +40,11 @@ export default function CommentsContainer({ comments, gameId }) {
             }
             <div className="mt-5">
             {
-                comments && comments.map(comment => (
+                comments && comments.length > 0
+                ? comments.map(comment => (
                     <Comment key={comment.id} {...comment} users={users} />
                 ))
+                : <p className="fst-italic">No comments yet</p>
             }
             </div>
         </div>

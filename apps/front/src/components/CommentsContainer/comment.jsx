@@ -9,12 +9,10 @@ export function Comment({ content, rating, userId, createdAt, users }) {
         <div class="card text-start">
             <div className="card-body">
                 <h5 class="card-title d-flex justify-content-between">
-                    <p>User id: {users[userId]}</p>
+                    <p className={users[userId] == null ? 'fst-italic' : ''}>{users[userId] ?? "Not found"}</p>
                     <p>            
                         {[...Array(fullStars)].map(() => <FaStar />)}         
-                        {   
-                            fullStars + emptyStars !== 5 && <FaRegStarHalfStroke />
-                        }
+                        {fullStars + emptyStars !== 5 && <FaRegStarHalfStroke />}
                         {[...Array(emptyStars)].map(() => <FaRegStar />)}      
                     </p>
                 </h5>
